@@ -46,8 +46,17 @@ class Field:
         
             # NOTE: delimiter for field file can be specified by changing _FIELD_FILE_DELIMITER
             _new_row = _line.strip('\n ').split(_FIELD_FILE_DELIMITER)
+            
+            # Handle the case if there was no delimiter in the field file (e.g no spaces between each cuboid)
+            _temp = []
+            for _item in _new_row:
+                for _ch in _item:
+                    _temp.extend([_ch])
+            _new_row = _temp
+            
             _len = len(_new_row)
             
+            # Set the number of columns
             if _len > self.n_col:
                 self.n_col = _len
 

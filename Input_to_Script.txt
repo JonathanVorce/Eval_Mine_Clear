@@ -1,7 +1,7 @@
 #####################################
 # Field and Script file pairings
-#   - First line is the file pairings
-#   - Second line is expected output
+#   - First line is expected output
+#   - Second line is the file pairings
 #####################################
 
 pass (5) <on step 1>
@@ -36,3 +36,10 @@ Tests\Field5.1.txt Tests\Script5.1.txt
 
 pass (38) <on step 6>
 Tests\Field2.3.txt Tests\Script2.3.txt
+
+###########
+# No delimiter between each cuboid in field file
+############
+
+pass (8) <on step 8>
+Tests\Field2.4.txt Tests\Script2.txt
