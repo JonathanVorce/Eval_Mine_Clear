@@ -23,7 +23,7 @@ _FALLING = {
     'N' : 'M', 'O' : 'N', 'P' : 'O', 'Q' : 'P',
     'R' : 'Q', 'S' : 'R', 'T' : 'S', 'U' : 'T',
     'V' : 'U', 'W' : 'V', 'X' : 'W', 'Y' : 'X',
-    'Z' : 'Y'}	 
+    'Z' : 'Y'}
 
 ###########################################################    
 # map of the mines locations and tracks center of field (own ship location) 
@@ -60,8 +60,11 @@ class Field:
             if _len > self.n_col:
                 self.n_col = _len
 
+            # Increment total number of mines
             _n = _new_row.count('.')
             self.n_mines += ( _len - _n )
+
+            # If there are mines, map the coordinates of the mines
             if _len - _n != 0:
                 for _j, _cuboid in enumerate(_new_row):
                     if _cuboid != '.':
@@ -71,7 +74,8 @@ class Field:
         # Find the center of the field (this is where own ship is defaulted to)
         self.center_x = math.floor(self.n_col / 2)
         self.center_y = math.floor(self.n_row / 2)
-    
+
+    # Return Number of mines in field
     def Get_N_Mines(self):
         return self.n_mines
     
@@ -116,7 +120,7 @@ class Field:
                 self.n_row -= _min * 2
                 _delta_y = _min
             
-        # We can only trim if we trim from both sides; otherwise we mess up the where the center is.
+        # We can only trim if we trim from both sides (left and right); otherwise we mess up the where the center is.
         if _left_margin and _right_margin:
             if _left_margin == _right_margin:
                 self.n_col -= _left_margin + _right_margin
@@ -138,13 +142,14 @@ class Field:
         self.center_x = math.floor(self.n_col / 2)
         self.center_y = math.floor(self.n_row / 2) 
         
-    # Retrieves from the dictionary the index of the 
-    # min/max row with at lease one mine
+    # Retrieve from the dictionary the index of the 
+    # min/max row with at least one mine
     def Min_Max_Row_With_Mine(self):
-        # sort the keys from the dictionary
-        _mine_coordinates = sorted(self.mines)
+        _mine_coordinates = sorted(self.mines)      # sort the keys from the dictionary
+        
         _min_col = _mine_coordinates[0][1]
         _max_col = _mine_coordinates[0][1]
+        
         for _x,_y in _mine_coordinates:
             if _y < _min_col:
                 _min_col = _y
@@ -152,13 +157,14 @@ class Field:
                 _max_col = _y
         return _min_col, _max_col 
     
-    # Retrieves from the dictionary the index of the 
-    # min/max column with at lease one mine
+    # Retrieve from the dictionary the index of the 
+    # min/max column with at least one mine
     def Min_Max_Column_With_Mine(self):
-        # sort the keys from the dictionary
-        _mine_coordinates = sorted(self.mines)
+        _mine_coordinates = sorted(self.mines)      # sort the keys from the dictionary
+        
         _north_west_mine = _mine_coordinates[0]
         _south_east_mine = _mine_coordinates[len(_mine_coordinates) - 1]
+        
         _min_row = _north_west_mine[0]
         _max_row = _south_east_mine[0]
         return _min_row, _max_row       
@@ -180,6 +186,8 @@ class Field:
         _f(command)
     
     # Wrapper for all move functions
+    # The move functions are sufficiently different that combining them 
+    # would result in obfuscated code
     def Move(self,direction):
         _delta_x = 0
         _delta_y = 0
@@ -193,11 +201,17 @@ class Field:
             _delta_x = self.West()
         else:
             self.Fall()
-            
+        
+        # We will need to adjust the coordinates of the mines if:
+        # 1) we took any rows off the top
+        # 2) we took any columns off the left side
         self.Adjust_Mine_Coordinates(_delta_x,_delta_y)
             
     def South(self):
         _min, _max = self.Min_Max_Row_With_Mine()
+        
+        # All mines need to move in the -y direction equal to the number of rows 
+        # that can be removed from the top of the field.
         _delta_y = _min * -1
         
         # The first mine is on row 0, so we have to add 2 rows to the bottom
@@ -210,23 +224,26 @@ class Field:
             self.center_y  -= 1
             self.n_row -= 2
             _delta_y = -2
-        return _delta_y     # We will need to adjust the coordinates of the mines if we took any rows off the top.
+        return _delta_y
         
     def North(self):
         _min, _max = self.Min_Max_Row_With_Mine()
         
         # The last mine is on the last row, so we have add 2 rows to the top
+        # All mines need to move +2 in the y direction
         if _max == self.n_row - 1:
             self.center_y  += 1
             self.n_row += 2
             _delta_y = 2
         
         # The last mine is on the last row - 1, so we can "remove"
-        # one row from the bottom and add one to the top
+        # one row from the bottom and "add" a row to the top.
+        # All mines need to move +1 in the y direction
         elif _max == self.n_row - 2:
             _delta_y = 1
             
         # The last mine is on the last row - 2, so we can trim two row off the bottom
+        # All mines don't move
         elif _max <= self.n_row - 3:
             self.center_y  -= 1
             self.n_row -= 2
@@ -250,6 +267,9 @@ class Field:
         
     def East(self):
         _min, _max = self.Min_Max_Column_With_Mine()
+        
+        # All mines need to move in the -x direction equal to the number of rows 
+        # that can be removed from the left side of the field.
         _delta_x = _min * -1
         
         if _min == 0:
@@ -369,7 +389,7 @@ class Score:
             if self.n_shots < self.max_num_of_shots_counted_as_penalty:
                 self.running_score += _SCORE_PER_SHOT
             self.n_shots += 1
-	
+
     # Return the score 
     def Return_Score(self):
         return str(self.running_score)
@@ -380,8 +400,7 @@ class Score:
 ###########################################################
 def main():
     try:
-        _input = input( '# NOTE: delimiter for field file can be specified by changing _FIELD_FILE_DELIMITER\n\n' + 
-                        'Please enter (on one line) the paths to the following files: field sript:\n').split()
+        _input = input('Please enter (on one line) the paths to the following files: field sript:\n').split()
     
         _field_file  = open(_input[0])
         _script_file = open(_input[1])
