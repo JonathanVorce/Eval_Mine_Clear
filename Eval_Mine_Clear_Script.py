@@ -9,6 +9,22 @@ _MAX_SHOT_PENALTY_MULTIPLIER = -5
 _FIELD_FILE_DELIMITER = ' '
 _SCRIPT_FILE_DELIMITER = ' '
 
+_FALLING = { 
+    '.' : '.', 'a' : '*', 'b' : 'a', 'c' : 'b',
+    'd' : 'c', 'e' : 'd', 'f' : 'e', 'g' : 'f',
+    'h' : 'g', 'i' : 'h', 'j' : 'i', 'k' : 'j',
+    'l' : 'k', 'm' : 'l', 'n' : 'm', 'o' : 'n',
+    'p' : 'o', 'q' : 'p', 'r' : 'q', 's' : 'r',
+    't' : 's', 'u' : 't', 'v' : 'u', 'w' : 'v',
+    'x' : 'w', 'y' : 'x', 'z' : 'y', 'A' : 'z',
+    'B' : 'A', 'C' : 'B', 'D' : 'C', 'E' : 'D',
+    'F' : 'E', 'G' : 'F', 'H' : 'G', 'I' : 'H',
+    'J' : 'I', 'K' : 'J', 'L' : 'K', 'M' : 'L',
+    'N' : 'M', 'O' : 'N', 'P' : 'O', 'Q' : 'P',
+    'R' : 'Q', 'S' : 'R', 'T' : 'S', 'U' : 'T',
+    'V' : 'U', 'W' : 'V', 'X' : 'W', 'Y' : 'X',
+    'Z' : 'Y'}
+
 ###########################################################    
 # map of the mines locations and tracks center of field (own ship location) 
 #
@@ -52,7 +68,7 @@ class Field:
             if _len - _n != 0:
                 for _j, _cuboid in enumerate(_new_row):
                     if _cuboid != '.':
-                        self.mines[(_j,_i)] = ord(_cuboid)
+                        self.mines[(_j,_i)] = _cuboid
                 
         
         # Find the center of the field (this is where own ship is defaulted to)
@@ -269,12 +285,10 @@ class Field:
     # Increment all mines, if a mine is currently == 'a' we will have passed it after we fall.
     def Fall(self):
         for _xy, _mine in self.mines.items():
-            if _mine == ord('a'):
+            if _mine == 'a':
                 self.passed_mines = True
-                self.mines[_xy] = ord('*')
-            else:
-                self.mines[_xy] -= 1
-
+            self.mines[_xy] = _FALLING[_mine]
+                    
         return self.passed_mines
 
     # Fire a torpedo at each coordinate relative to center of the field. 
@@ -308,7 +322,7 @@ class Field:
                         if show_own_ship and _x == self.center_x and _y == self.center_y:
                             _str += str(_x)
                         elif self.mines.__contains__((_x,_y)):
-                            _str += chr(self.mines[(_x,_y)])
+                            _str += self.mines[(_x,_y)]
                         else:
                             _str += '.'
                 print(_str)
