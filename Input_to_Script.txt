@@ -1,0 +1,38 @@
+#####################################
+# Field and Script file pairings
+#   - First line is the file pairings
+#   - Second line is expected output
+#####################################
+
+pass (5) <on step 1>
+Tests\Field1.txt Tests\Script1.txt
+
+pass (8) <on step 8>
+Tests\Field2.txt Tests\Script2.txt
+
+pass (1) <on step 1>
+Tests\Field1.txt Tests\Script3.txt
+
+fail (0) <on step 1>
+Tests\Field4.txt Tests\Script4.txt
+
+fail (0) <on step 6>
+Tests\Field2.txt Tests\Script5.txt
+
+pass (13) <on step 7>:
+Tests\Field2.txt Tests\Script6.txt
+
+pass (18) <on step 6>
+Tests\Field2.txt Tests\Script7.txt
+
+pass (20) <on step 7>
+Tests\Field2.2.txt Tests\Script2.2.txt
+
+Error:
+Tests\Field2.3.4.5.txt Tests\Script2.2.txt
+
+pass (32) <on step 5>
+Tests\Field5.1.txt Tests\Script5.1.txt
+
+pass (38) <on step 6>
+Tests\Field2.3.txt Tests\Script2.3.txt

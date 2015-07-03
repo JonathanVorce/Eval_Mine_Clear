@@ -1,0 +1,5 @@
+beta south
+west delta
+north gamma
+north
+alpha

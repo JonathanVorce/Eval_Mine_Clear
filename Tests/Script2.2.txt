@@ -1,0 +1,7 @@
+north
+alpha east
+south
+east
+south
+
+alpha
