@@ -1,3 +1,4 @@
+#!python3
 import pdb
 import math
 import os.path
@@ -466,8 +467,8 @@ def main():
         if _field.Get_N_Mines() != 0 and not _fail:
             print('fail (' + str(0) +')')  
         
-        print()
-        input()
+        print()             # print an empty line
+        input()             # wait for user input
     except:
         raise
 # end main()   
