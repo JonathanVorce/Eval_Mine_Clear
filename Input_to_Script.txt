@@ -51,6 +51,7 @@ Tests\Field2.txt Tests\Script7.txt
 ######################################################################
 Error: <file does not exist>
 Tests\Field2.3.4.5.txt Tests\Script2.2.txt
+Tests\Field2.3.txt Tests\Script2.2.4.5.txt
 
 ######################################################################
 # A complicated field with 'a' value mines at the start

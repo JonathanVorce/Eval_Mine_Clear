@@ -1,5 +1,6 @@
 import pdb
 import math
+import os.path
 
 _SCORE_PER_MINE = 10
 _SCORE_PER_SHOT = -5
@@ -389,10 +390,20 @@ class Score:
 def main():
     try:
         _input = input('Please enter (on one line) the paths to the following files: field sript:\n').split()
-    
+
+        if not os.path.isfile(_input[0]):
+            print('\n ** ERROR: The field file does not exist.')
+            input()     # Wait for user response
+            return
+
+        if not os.path.isfile(_input[1]):
+            print('\n ** ERROR: The script file does not exist.')
+            input()     # Wait for user response
+            return
+
         _field_file  = open(_input[0])
         _script_file = open(_input[1])
-    
+
         # Read each line from the field file and create a field object
         # Read each line from the script file and create a script object 
         _field  = Field(_field_file)
@@ -400,7 +411,7 @@ def main():
         
         _n_steps = _script.Get_N_Steps()    
         _score = Score(_field.n_mines,_n_steps)
-        
+
         #
         # Execute script
         #   Print step #
