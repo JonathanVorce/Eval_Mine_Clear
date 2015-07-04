@@ -29,7 +29,7 @@ class Field:
         for _i, _line in enumerate(_lines):
         
             # NOTE: delimiter for field file can be specified by changing _FIELD_FILE_DELIMITER
-            _new_row = _line.strip('\n ').split(_FIELD_FILE_DELIMITER)
+            _new_row = _line.strip('\n\r ').split(_FIELD_FILE_DELIMITER)
             
             # Handle the case if there was no delimiter in the field file (e.g no spaces between each cuboid)
             _temp = []
@@ -272,6 +272,8 @@ class Field:
             if _mine == ord('a'):
                 self.passed_mines = True
                 self.mines[_xy] = ord('*')
+            elif _mine == ord('A'):
+                self.mines[_xy] = ord('z')
             else:
                 self.mines[_xy] -= 1
                     
@@ -329,7 +331,7 @@ class Script:
         for _line in _lines:
         
             # NOTE: delimiter for script file can be specified by changing _SCRIPT_FILE_DELIMITER
-            _new_command = _line.strip('\n').split(_SCRIPT_FILE_DELIMITER)
+            _new_command = _line.strip('\n\r ').split(_SCRIPT_FILE_DELIMITER)
             self.instructions.append(_new_command)
             self.n_steps += 1
     

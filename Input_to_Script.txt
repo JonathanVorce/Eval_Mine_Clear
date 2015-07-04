@@ -1,45 +1,81 @@
-#####################################
+######################################################################
 # Field and Script file pairings
 #   - First line is expected output
 #   - Second line is the file pairings
-#####################################
+######################################################################
 
+######################################################################
+# Example 1: Simple successful run
+######################################################################
 pass (5) <on step 1>
 Tests\Field1.txt Tests\Script1.txt
 
+######################################################################
+# Example 2: Successful run
+######################################################################
 pass (8) <on step 8>
 Tests\Field2.txt Tests\Script2.txt
 
+######################################################################
+# Example 3: Complete but script too long 
+######################################################################
 pass (1) <on step 1>
 Tests\Field1.txt Tests\Script3.txt
 
+######################################################################
+# Example 4: Missed a mine
+######################################################################
 fail (0) <on step 1>
 Tests\Field4.txt Tests\Script4.txt
 
+######################################################################
+# Example 5: Script too short
+######################################################################
 fail (0) <on step 6>
 Tests\Field2.txt Tests\Script5.txt
 
+######################################################################
+# More efficient version of example 2 
+######################################################################
 pass (13) <on step 7>:
 Tests\Field2.txt Tests\Script6.txt
 
+######################################################################
+# Still even more efficient version of example 2 
+######################################################################
 pass (18) <on step 6>
 Tests\Field2.txt Tests\Script7.txt
 
-pass (20) <on step 7>
-Tests\Field2.2.txt Tests\Script2.2.txt
-
-Error:
+######################################################################
+# Want to see what happens when the file doesn't exist?
+######################################################################
+Error: <file does not exist>
 Tests\Field2.3.4.5.txt Tests\Script2.2.txt
 
+######################################################################
+# A complicated field with 'a' value mines at the start
+######################################################################
 pass (32) <on step 5>
 Tests\Field5.1.txt Tests\Script5.1.txt
 
-pass (38) <on step 6>
+######################################################################
+# A script that contains every single missile fire patter and every
+# single direction to move including a blank line (implied falling)
+# The field is also not uniform on the right side (rows do not have equal lengths)
+######################################################################
+pass (38) <on step 7>
 Tests\Field2.3.txt Tests\Script2.3.txt
 
-###########
+######################################################################
 # No delimiter between each cuboid in field file
-############
-
+# and boundary condition with last mine being 'a' on last step
+######################################################################
 pass (8) <on step 8>
 Tests\Field2.4.txt Tests\Script2.txt
+
+######################################################################
+# Mines have value of 'A' - testing the method of using numbers
+# instead of characters to track the value of the mine. 'A' -> 'z'
+######################################################################
+pass (8) <on step 8>
+Tests\Field2.5.txt Tests\Script2.txt

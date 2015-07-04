@@ -2,5 +2,6 @@ north
 west alpha
 beta east
 south
+
 east gamma
 south delta
