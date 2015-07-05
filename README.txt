@@ -1,5 +1,5 @@
 BRANCHES:
-    + Master: can run script in Python v3  
+    + Master          : can run script in Python v3  
     + Python_Version_2: can run script in Python v2  
 
 ASSIGNMENT:
