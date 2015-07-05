@@ -2,6 +2,7 @@
 import pdb
 import math
 import os.path
+import sys
 from Field  import Field
 from Script import Script
 from Score  import Score
@@ -11,20 +12,17 @@ from Score  import Score
 ###########################################################
 def main():
     try:
-        _input = input('Please enter (on one line) the paths to the following files: field sript:\n').split()
+        if len(sys.argv) != 3:
+            sys.exit('\n ** ERROR: The script requires two inputs: <path to Field file> <path to Script file>.')
 
-        if not os.path.isfile(_input[0]):
-            print('\n ** ERROR: The field file does not exist.')
-            input()     # Wait for user response
-            return
+        if not os.path.isfile(sys.argv[1]):
+            sys.exit('\n ** ERROR: The field file does not exist.')
 
-        if not os.path.isfile(_input[1]):
-            print('\n ** ERROR: The script file does not exist.')
-            input()     # Wait for user response
-            return
+        if not os.path.isfile(sys.argv[2]):
+            sys.exit('\n ** ERROR: The script file does not exist.')
 
-        _field_file  = open(_input[0])
-        _script_file = open(_input[1])
+        _field_file  = open(sys.argv[1])
+        _script_file = open(sys.argv[2])
 
         # Read each line from the field file and create a field object
         # Read each line from the script file and create a script object 
