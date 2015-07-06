@@ -85,33 +85,21 @@ class Field:
         
         # We can only trim if we trim from both top and bottom; otherwise we mess up the where the center is.
         if _top_margin and _bottom_margin:
-            if _top_margin == _bottom_margin:
-                self.n_row -= _top_margin + _bottom_margin
-                _delta_y = _top_margin
-            else:
-                
-                # If the top and bottom margins are not equal we need to take the magnitude of the 
-                # smaller margin off the top and bottom, but only if it is divisible by 2. 
-                _min = min(_top_margin,_bottom_margin)
-                if _min % 2 != 0:
-                    _min -= 1
-                self.n_row -= _min * 2
-                _delta_y = _min
+        
+            # If the top and bottom margins are not equal we need to take the magnitude of the 
+            # smaller margin off the top and bottom. 
+            _min = min(_top_margin,_bottom_margin)
+            self.n_row -= _min * 2
+            _delta_y = _min
             
         # We can only trim if we trim from both sides (left and right); otherwise we mess up the where the center is.
         if _left_margin and _right_margin:
-            if _left_margin == _right_margin:
-                self.n_col -= _left_margin + _right_margin
-                _delta_x = _left_margin
-            else:
-            
-                # If the left and right margins are not equal we need to take the magnitude of the 
-                # smaller margin off the left and right, but only if it is divisible by 2. 
-                _min = min(_left_margin,_right_margin)
-                if _min % 2 != 0:
-                    _min -= 1
-                self.n_col -= _min * 2
-                _delta_x = _min
+
+            # If the left and right margins are not equal we need to take the magnitude of the
+            # smaller margin off the left and right. 
+            _min = min(_left_margin,_right_margin)
+            self.n_col -= _min * 2
+            _delta_x = _min
             
         # move the coordinates of the mines for any space taken from the top or the left side       
         self.Adjust_Mine_Coordinates(_delta_x * -1, _delta_y * -1)
@@ -123,25 +111,34 @@ class Field:
     # Retrieve from the dictionary the index of the 
     # min/max row with at least one mine
     def Min_Max_Row_With_Mine(self):
-        _mine_coordinates = sorted(self.mines)      # sort the keys from the dictionary
-        
-        _min_row = _mine_coordinates[0][1]
-        _max_row = _mine_coordinates[0][1]
-        
-        for _x,_y in _mine_coordinates:
-            if _y < _min_row:
-                _min_row = _y
-            if _y > _max_row:
-                _max_row = _y
+        if self.n_mines != 0:
+            _mine_coordinates = sorted(self.mines)      # sort the keys from the dictionary
+            
+            _min_row = _mine_coordinates[0][1]
+            _max_row = _mine_coordinates[0][1]
+            
+            for _x,_y in _mine_coordinates:
+                if _y < _min_row:
+                    _min_row = _y
+                if _y > _max_row:
+                    _max_row = _y
+        else:
+            _min_row = 0
+            _max_row = 0
+            
         return _min_row, _max_row 
     
     # Retrieve from the dictionary the index of the 
     # min/max column with at least one mine
     def Min_Max_Column_With_Mine(self):
-        _mine_coordinates = sorted(self.mines)      # sort the keys from the dictionary
-        
-        _min_col = _mine_coordinates[0][0]
-        _max_col = _mine_coordinates[len(_mine_coordinates) - 1][0]
+        if self.n_mines != 0:
+            _mine_coordinates = sorted(self.mines)      # sort the keys from the dictionary
+
+            _min_col = _mine_coordinates[0][0]
+            _max_col = _mine_coordinates[len(_mine_coordinates) - 1][0]
+        else:
+            _min_col = 0
+            _max_col = 0
         return _min_col, _max_col       
     
     # Wrapper for all command functions
@@ -292,15 +289,13 @@ class Field:
                 del self.mines[(_target_x,_target_y)]
     
     # Start at (0,0), if no mine appears at those coordinates print '.', otherwise print the value of the mine. 
-    def Print(self,show_own_ship=False):
+    def Print(self):
         if self.n_mines:
             self.Trim_Edges()
             for _y in range(self.n_row):
                 _str = ''
                 for _x in range(self.n_col):
-                    if show_own_ship and _x == self.center_x and _y == self.center_y:
-                        _str += str(_x)
-                    elif self.mines.__contains__((_x,_y)):
+                    if self.mines.__contains__((_x,_y)):
                         _str += chr(self.mines[(_x,_y)])
                     else:
                         _str += '.'

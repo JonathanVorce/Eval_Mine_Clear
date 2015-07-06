@@ -30,7 +30,7 @@ def main():
         _script = Script(_script_file)
         
         _n_steps = _script.Get_N_Steps()    
-        _score = Score(_field.n_mines,_n_steps)
+        _score = Score(_field.Get_N_Mines())
 
         #
         # Execute script
