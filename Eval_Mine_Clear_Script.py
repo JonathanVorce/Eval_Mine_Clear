@@ -79,7 +79,7 @@ def main():
                 if _n_steps_executed < _n_steps:
                     print('pass  (' + str(1) +')')
                 else:
-                    print('pass  (' + _score.Return_Score() +')')
+                    print('pass  (' + str(_score.Return_Score()) +')')
                 break
         # end for loop 
         
