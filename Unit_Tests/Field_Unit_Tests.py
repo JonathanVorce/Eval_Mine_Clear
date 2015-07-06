@@ -1,12 +1,16 @@
 import unittest
 import pdb
-from Field import Field
+import sys
+import os.path
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+import Field
 
 class FieldTest(unittest.TestCase):
 
     def test_Init_Empty(self):
-        _file = open('Unit_Tests\\Fields\\Field_Empty.txt')
-        _field = Field(_file)
+        _file = open('.\\Fields\\Field_Empty.txt')
+        _field = Field.Field(_file)
         _file.close()
 
         self.assertEqual(_field.n_mines,0)
@@ -20,8 +24,8 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,0)
 
     def test_Init_Alpha(self):
-        _file = open('Unit_Tests\\Fields\\Field_Alpha.txt')
-        _field = Field(_file)
+        _file = open('.\\Fields\\Field_Alpha.txt')
+        _field = Field.Field(_file)
         _file.close()
 
         self.assertEqual(_field.n_mines,4)
@@ -38,8 +42,8 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,1)
         
     def test_Init_Bottom_Justified(self):        
-        _file = open('Unit_Tests\\Fields\\Field_3x3_Bottom_Row.txt')
-        _field = Field(_file)
+        _file = open('.\\Fields\\Field_3x3_Bottom_Row.txt')
+        _field = Field.Field(_file)
         _file.close()
 
         self.assertEqual(_field.n_mines,3)
@@ -55,8 +59,8 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,1)
         
     def test_Init_Bottom_Justified(self):        
-        _file = open('Unit_Tests\\Fields\\Field_3x3_Right_Col.txt')
-        _field = Field(_file)
+        _file = open('.\\Fields\\Field_3x3_Right_Col.txt')
+        _field = Field.Field(_file)
         _file.close()
 
         self.assertEqual(_field.n_mines,3)
@@ -72,8 +76,8 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,1)
 
     def test_Init_Ragged_Diagonal(self):        
-        _file = open('Unit_Tests\\Fields\\Field_3x3_Ragged_Diagonal.txt')
-        _field = Field(_file)
+        _file = open('.\\Fields\\Field_3x3_Ragged_Diagonal.txt')
+        _field = Field.Field(_file)
         _file.close()
 
         self.assertEqual(_field.n_mines,3)
@@ -89,8 +93,8 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,1)
 
     def test_Trim_Edges(self):
-        _file = open('Unit_Tests\\Fields\\Field_3x3_Needs_A_Trim.txt')
-        _field = Field(_file)
+        _file = open('.\\Fields\\Field_3x3_Needs_A_Trim.txt')
+        _field = Field.Field(_file)
         _file.close()
 
         self.assertEqual(_field.n_col,13)
@@ -106,15 +110,15 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.mines[(2,2)],ord('a'))
 
     def test_Fall_From_A(self):
-        _file = open('Unit_Tests\\Fields\\Field_Upper_a.txt')
-        _field = Field(_file)
+        _file = open('.\\Fields\\Field_Upper_A.txt')
+        _field = Field.Field(_file)
         self.assertFalse(_field.Fall())
         self.assertEqual(_field.mines[(0,0)], ord('z'))
         _file.close()
         
     def test_Fall_From_a(self):
-        _file = open('Unit_Tests\\Fields\\Field_Lower_a.txt')
-        _field = Field(_file)
+        _file = open('.\\Fields\\Field_Lower_a.txt')
+        _field = Field.Field(_file)
         self.assertTrue(_field.Fall())
         self.assertEqual(_field.mines[(0,0)], ord('*'))
         _file.close()

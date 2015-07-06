@@ -1,7 +1,7 @@
 *************
 * SOLUTION: *
 *************
-Run the python script from the command line. Script takes two arguments when called:
+Run "Eval_Mine_Clear_Script.py" from the command line. This script takes two arguments when called:
 <Field>  = path to the field file
 <Script> = path to the script file to be tested
 
@@ -23,9 +23,9 @@ Write a script to evaluate your students mine clearing scripts.
 ************
 * TESTING: *
 ************
-See "Input_to_Script.txt" for testing instructions.  
+See Tests\Input_to_Script.txt for testing instructions.  
 
-example testing call:
+Example testing call:
 > python Eval_Mine_Clear_Script.py Tests\Field1.txt Tests\Script1.txt
 
 *************
