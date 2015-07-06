@@ -44,9 +44,9 @@ class Field:
 
             # If there are mines, map the coordinates of the mines
             if _len - _n != 0:
-                for _j, _cuboid in enumerate(_new_row):
-                    if _cuboid != '.':
-                        self.mines[(_j,_i)] = ord(_cuboid)
+                for _j, _ch in enumerate(_new_row):
+                    if _ch != '.':
+                        self.mines[(_j,_i)] = ord(_ch)
                 
         
         # Find the center of the field (this is where own ship is defaulted to)
@@ -125,27 +125,24 @@ class Field:
     def Min_Max_Row_With_Mine(self):
         _mine_coordinates = sorted(self.mines)      # sort the keys from the dictionary
         
-        _min_col = _mine_coordinates[0][1]
-        _max_col = _mine_coordinates[0][1]
+        _min_row = _mine_coordinates[0][1]
+        _max_row = _mine_coordinates[0][1]
         
         for _x,_y in _mine_coordinates:
-            if _y < _min_col:
-                _min_col = _y
-            if _y > _max_col:
-                _max_col = _y
-        return _min_col, _max_col 
+            if _y < _min_row:
+                _min_row = _y
+            if _y > _max_row:
+                _max_row = _y
+        return _min_row, _max_row 
     
     # Retrieve from the dictionary the index of the 
     # min/max column with at least one mine
     def Min_Max_Column_With_Mine(self):
         _mine_coordinates = sorted(self.mines)      # sort the keys from the dictionary
         
-        _north_west_mine = _mine_coordinates[0]
-        _south_east_mine = _mine_coordinates[len(_mine_coordinates) - 1]
-        
-        _min_row = _north_west_mine[0]
-        _max_row = _south_east_mine[0]
-        return _min_row, _max_row       
+        _min_col = _mine_coordinates[0][0]
+        _max_col = _mine_coordinates[len(_mine_coordinates) - 1][0]
+        return _min_col, _max_col       
     
     # Wrapper for all command functions
     def Command(self,command):
@@ -260,7 +257,7 @@ class Field:
             _delta_x = -2
         return _delta_x
     
-    # Increment all mines, if a mine is currently == 'a' we will have passed it after we fall.
+    # Decrement all mines, if a mine is currently == 'a' we will have passed it after we fall.
     def Fall(self):
         for _xy, _mine in self.mines.items():
             if _mine == ord('a'):

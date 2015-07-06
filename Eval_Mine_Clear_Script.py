@@ -13,7 +13,7 @@ from Score  import Score
 def main():
     try:
         if len(sys.argv) != 3:
-            sys.exit('\n ** ERROR: The script requires two inputs: <path to Field file> <path to Script file>.')
+            sys.exit('\n ** ERROR: The script requires two inputs: > python script.py <path to Field file> <path to Script file>.')
 
         if not os.path.isfile(sys.argv[1]):
             sys.exit('\n ** ERROR: The field file does not exist.')
