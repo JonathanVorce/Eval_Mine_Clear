@@ -72,42 +72,49 @@ class Field:
     # We should only print the minimum field size to show all mines and correctly
     # place the ship at the center of the field.
     def Trim_Edges(self):
-        _min_col, _max_col = self.Min_Max_Column_With_Mine()
-        _min_row, _max_row = self.Min_Max_Row_With_Mine()
-        
-        _left_margin = _min_col
-        _right_margin = (self.n_col - 1) - _max_col
-        _top_margin = _min_row
-        _bottom_margin = (self.n_row - 1) - _max_row
-        
-        _delta_x = 0
-        _delta_y = 0
-        
-        # We can only trim if we trim from both top and bottom; otherwise we mess up the where the center is.
-        if _top_margin and _bottom_margin:
-        
-            # If the top and bottom margins are not equal we need to take the magnitude of the 
-            # smaller margin off the top and bottom. 
-            _min = min(_top_margin,_bottom_margin)
-            self.n_row -= _min * 2
-            _delta_y = _min
-            
-        # We can only trim if we trim from both sides (left and right); otherwise we mess up the where the center is.
-        if _left_margin and _right_margin:
+        if self.n_mines == 0:
+            self.n_row = 1
+            self.n_col = 1
+            self.center_x = 0
+            self.center_y = 0
 
-            # If the left and right margins are not equal we need to take the magnitude of the
-            # smaller margin off the left and right. 
-            _min = min(_left_margin,_right_margin)
-            self.n_col -= _min * 2
-            _delta_x = _min
-            
-        # move the coordinates of the mines for any space taken from the top or the left side       
-        self.Adjust_Mine_Coordinates(_delta_x * -1, _delta_y * -1)
-        
-        # readjust the coordinates of the center 
-        self.center_x = math.floor(self.n_col / 2)
-        self.center_y = math.floor(self.n_row / 2) 
-        
+        else:
+            _min_col, _max_col = self.Min_Max_Column_With_Mine()
+            _min_row, _max_row = self.Min_Max_Row_With_Mine()
+
+            _left_margin = _min_col
+            _right_margin = (self.n_col - 1) - _max_col
+            _top_margin = _min_row
+            _bottom_margin = (self.n_row - 1) - _max_row
+
+            _delta_x = 0
+            _delta_y = 0
+           
+            # We can only trim if we trim from both top and bottom; otherwise we mess up the where the center is.
+            if _top_margin and _bottom_margin:
+
+                # If the top and bottom margins are not equal we need to take the magnitude of the 
+                # smaller margin off the top and bottom. 
+                _min = min(_top_margin,_bottom_margin)
+                self.n_row -= _min * 2
+                _delta_y = _min
+                
+            # We can only trim if we trim from both sides (left and right); otherwise we mess up the where the center is.
+            if _left_margin and _right_margin:
+
+                # If the left and right margins are not equal we need to take the magnitude of the
+                # smaller margin off the left and right. 
+                _min = min(_left_margin,_right_margin)
+                self.n_col -= _min * 2
+                _delta_x = _min
+
+            # Move the coordinates of the mines for any space taken from the top or the left side       
+            self.Adjust_Mine_Coordinates(_delta_x * -1, _delta_y * -1)
+
+            # Readjust the coordinates of the center 
+            self.center_x = math.floor(self.n_col / 2)
+            self.center_y = math.floor(self.n_row / 2) 
+
     # Retrieve from the dictionary the index of the 
     # min/max row with at least one mine
     def Min_Max_Row_With_Mine(self):
@@ -290,16 +297,14 @@ class Field:
     
     # Start at (0,0), if no mine appears at those coordinates print '.', otherwise print the value of the mine. 
     def Print(self):
-        if self.n_mines:
-            self.Trim_Edges()
-            for _y in range(self.n_row):
-                _str = ''
-                for _x in range(self.n_col):
-                    if self.mines.__contains__((_x,_y)):
-                        _str += chr(self.mines[(_x,_y)])
-                    else:
-                        _str += '.'
-                print(_str)
-        else:
-            print ('.')
+        self.Trim_Edges()
+        for _y in range(self.n_row):
+            _str = ''
+            for _x in range(self.n_col):
+                if self.mines.__contains__((_x,_y)):
+                    _str += chr(self.mines[(_x,_y)])
+                else:
+                    _str += '.'
+            print(_str)
+
 # end class Field
