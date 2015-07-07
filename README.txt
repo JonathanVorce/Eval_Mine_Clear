@@ -23,8 +23,11 @@ Write a script to evaluate your students mine clearing scripts.
 ************
 * TESTING: *
 ************
-See Tests\Input_to_Script.txt for testing instructions.  
+Run automated tests from 'Tests\Run_Tests.py'
+> cd Tests\
+> python Run_Tests.py
 
+See 'Tests\Input_to_Script.txt' for manual testing instructions.  
 Example testing call:
 > python Eval_Mine_Clear_Script.py Tests\Field1.txt Tests\Script1.txt
 

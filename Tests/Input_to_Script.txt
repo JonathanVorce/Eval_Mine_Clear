@@ -37,12 +37,6 @@ Tests\Field2.txt Tests\Script5.txt
 ######################################################################
 # More efficient version of example 2 
 ######################################################################
-pass (13) <on step 7>:
-Tests\Field2.txt Tests\Script6.txt
-
-######################################################################
-# Still even more efficient version of example 2 
-######################################################################
 pass (18) <on step 6>
 Tests\Field2.txt Tests\Script7.txt
 

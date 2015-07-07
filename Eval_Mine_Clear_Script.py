@@ -73,19 +73,21 @@ def main():
             print()         # print an empty line
             
             if _fail:
-                print('fail (' + str(0) +')')
+                _result = 'fail (' + str(0) +')'
                 break
             elif _field.Get_N_Mines() == 0:
                 if _n_steps_executed < _n_steps:
-                    print('pass  (' + str(1) +')')
+                    _result = 'pass (' + str(1) +')'
                 else:
-                    print('pass  (' + str(_score.Return_Score()) +')')
+                    _result = 'pass (' + str(_score.Return_Score()) +')'
                 break
         # end for loop 
         
         if _field.Get_N_Mines() != 0 and not _fail:
-            print('fail (' + str(0) +')')  
+            _result = 'fail (' + str(0) +')'
 
+        print(_result)
+        return _result
     except:
         raise
 # end main()   
