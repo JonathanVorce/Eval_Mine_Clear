@@ -5,11 +5,11 @@ import os.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 import Eval_Mine_Clear_Script
 
-_TEST_PAIRS = [ ('..\\Tests\\Field1.txt'   , '..\\Tests\\Script1.txt'   , 'pass (5)' ),
-                ('..\\Tests\\Field2.txt'   , '..\\Tests\\Script2.txt'   , 'pass (8)' ),
-                ('..\\Tests\\Field1.txt'   , '..\\Tests\\Script3.txt'   , 'pass (1)' ),
-                ('..\\Tests\\Field4.txt'   , '..\\Tests\\Script4.txt'   , 'fail (0)' ),
-                ('..\\Tests\\Field2.txt'   , '..\\Tests\\Script5.txt'   , 'fail (0)' ),
+_TEST_PAIRS = [ ('..\\Tests\\Field1.txt'   , '..\\Tests\\Script1.txt'   , 'pass (5)' ), # Example 1
+                ('..\\Tests\\Field2.txt'   , '..\\Tests\\Script2.txt'   , 'pass (8)' ), # Example 2
+                ('..\\Tests\\Field1.txt'   , '..\\Tests\\Script3.txt'   , 'pass (1)' ), # Example 3
+                ('..\\Tests\\Field4.txt'   , '..\\Tests\\Script4.txt'   , 'fail (0)' ), # Example 4
+                ('..\\Tests\\Field2.txt'   , '..\\Tests\\Script5.txt'   , 'fail (0)' ), # Example 5
                 ('..\\Tests\\Field2.txt'   , '..\\Tests\\Script7.txt'   , 'pass (18)'),
                 ('..\\Tests\\Field5.1.txt' , '..\\Tests\\Script5.1.txt' , 'pass (32)'),
                 ('..\\Tests\\Field2.3.txt' , '..\\Tests\\Script2.3.txt' , 'pass (38)'),
@@ -37,7 +37,7 @@ def main():
             _result = 'FAILED'
         print(_f + '\t' + _s + '\t---RESULTS---> ' + _result)
 
-    print('\n' + str(_num_failed) + ' of ' + str(_num_tests) + ' tests FAILED.')
+    print('\n ' + str(_num_failed) + ' of ' + str(_num_tests) + ' tests FAILED.')
 
 if __name__ == '__main__' :
     main()
