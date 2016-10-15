@@ -74,3 +74,9 @@ Tests\Field2.4.txt Tests\Script2.txt
 ######################################################################
 pass (8) <on step 8>
 Tests\Field2.5.txt Tests\Script2.txt
+
+######################################################################
+# Field has an even number of rows and therefore cannot have an exact center
+######################################################################
+** ERROR: The Field provided does not have a center. It has either on even number of rows or columns.
+Tests\Field6_Even_Rows.txt Tests\Script1.txt

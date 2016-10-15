@@ -1,5 +1,6 @@
 import pdb
 import math
+import sys
 
 _FIELD_FILE_DELIMITER = ' '
 
@@ -39,8 +40,8 @@ class Field:
                 self.n_col = _len
 
             # Increment total number of mines
-            _n = _new_row.count('.')
-            self.n_mines += ( _len - _n )
+            _n = _new_row.count('.')        # count "number of empty spaces"
+            self.n_mines += ( _len - _n )   # len - "number of empty spaces" = num mines on this row
 
             # If there are mines, map the coordinates of the mines
             if _len - _n != 0:
@@ -48,7 +49,11 @@ class Field:
                     if _ch != '.':
                         self.mines[(_j,_i)] = ord(_ch)
                 
+        #end for loop
         
+        if ((self.n_col % 2 == 0) or (self.n_row % 2 == 0)):
+            sys.exit('\n ** ERROR: The Field provided does not have a center. It has either on even number of rows or columns.')
+            
         # Find the center of the field (this is where own ship is defaulted to)
         self.center_x = math.floor(self.n_col / 2)
         self.center_y = math.floor(self.n_row / 2)
