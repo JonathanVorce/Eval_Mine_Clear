@@ -2,13 +2,24 @@ import unittest
 import pdb
 import sys
 import os.path
+_CURRENT_FILE_DIR_PATH = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 import Field
+
+###########################################################
+# Unit test the Field class functions
+#
+# Field.Init()
+# Field.Get_N_Mines()
+# Field.Adjust_Mine_Coordinates()
+# Field.Trim_Edges()
+# Field.Fall()
+###########################################################
 
 class FieldTest(unittest.TestCase):
 
     def test_Init_Empty(self):
-        _file = open('.\\Fields\\Field_Empty.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Empty.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -23,7 +34,7 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,0)
 
     def test_Init_Alpha(self):
-        _file = open('.\\Fields\\Field_Alpha.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Alpha.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -40,8 +51,8 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_x,1)
         self.assertEqual(_field.center_y,1)
         
-    def test_Init_Bottom_Justified(self):        
-        _file = open('.\\Fields\\Field_3x3_Bottom_Row.txt')
+    def test_Init_Bottom_Justified(self):
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_3x3_Bottom_Row.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -58,7 +69,7 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,1)
         
     def test_Init_Right_Justified(self):        
-        _file = open('.\\Fields\\Field_3x3_Right_Col.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_3x3_Right_Col.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -75,7 +86,7 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,1)
 
     def test_Init_Ragged_Diagonal(self):        
-        _file = open('.\\Fields\\Field_3x3_Ragged_Diagonal.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_3x3_Ragged_Diagonal.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -92,21 +103,21 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,1)
 
     def test_Get_N_Mines_Zero(self):
-        _file = open('.\\Fields\\Field_Empty.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Empty.txt')
         _field = Field.Field(_file)
         _file.close()
         
         self.assertEqual(_field.Get_N_Mines(),0)
 
     def test_Get_N_Mines_Nine(self):
-        _file = open('.\\Fields\\Field_3x3_Full_Mines.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_3x3_Full_Mines.txt')
         _field = Field.Field(_file)
         _file.close()
         
         self.assertEqual(_field.Get_N_Mines(),9)
 
     def test_Adjust_Mine_Coordinates_zero(self):
-        _file = open('.\\Fields\\Field_Alpha.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Alpha.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -118,7 +129,7 @@ class FieldTest(unittest.TestCase):
         self.assertTrue(_field.mines.__contains__((2,2)))
 
     def test_Adjust_Mine_Coordinates_plus_one_x_plus_one_y(self):
-        _file = open('.\\Fields\\Field_Alpha.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Alpha.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -130,7 +141,7 @@ class FieldTest(unittest.TestCase):
         self.assertTrue(_field.mines.__contains__((2+1,2+1)))
 
     def test_Adjust_Mine_Coordinates_minus_one_x_minus_one_y(self):
-        _file = open('.\\Fields\\Field_Alpha.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Alpha.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -142,7 +153,7 @@ class FieldTest(unittest.TestCase):
         self.assertTrue(_field.mines.__contains__((2-1,2-1)))
 
     def test_Trim_Edges_Empty(self):
-        _file = open('.\\Fields\\Field_Empty.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Empty.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -160,7 +171,7 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,0)
 
     def test_Trim_Edges_3x3_No_Mines(self):
-        _file = open('.\\Fields\\Field_3x3_No_Mines.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_3x3_No_Mines.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -178,7 +189,7 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,0)
 
     def test_Trim_Edges_3x3_Needs_A_Trim(self):
-        _file = open('.\\Fields\\Field_3x3_Needs_A_Trim.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_3x3_Needs_A_Trim.txt')
         _field = Field.Field(_file)
         _file.close()
 
@@ -198,14 +209,14 @@ class FieldTest(unittest.TestCase):
         self.assertEqual(_field.center_y,2)
 
     def test_Fall_From_Upper_A(self):
-        _file = open('.\\Fields\\Field_Upper_A.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Upper_A.txt')
         _field = Field.Field(_file)
         self.assertFalse(_field.Fall())
         self.assertEqual(_field.mines[(0,0)], ord('z'))
         _file.close()
         
     def test_Fall_From_Lower_a(self):
-        _file = open('.\\Fields\\Field_Lower_a.txt')
+        _file = open(_CURRENT_FILE_DIR_PATH + '\\Fields\\Field_Lower_a.txt')
         _field = Field.Field(_file)
         self.assertTrue(_field.Fall())
         self.assertEqual(_field.mines[(0,0)], ord('*'))
