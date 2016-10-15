@@ -51,7 +51,7 @@ class Field:
                 
         #end for loop
         
-        if ((self.n_col % 2 == 0) or (self.n_row % 2 == 0)):
+        if ((self.n_col and self.n_col % 2 == 0) or (self.n_row and self.n_row % 2 == 0)):
             sys.exit('\n ** ERROR: The Field provided does not have a center. It has either on even number of rows or columns.')
             
         # Find the center of the field (this is where own ship is defaulted to)
