@@ -90,7 +90,7 @@ class Field:
             _delta_x = 0
             _delta_y = 0
            
-            # We can only trim if we trim from both top and bottom; otherwise we mess up the where the center is.
+            # We can only trim if we trim from both top and bottom; otherwise we mess up where the center is.
             if _top_margin and _bottom_margin:
 
                 # If the top and bottom margins are not equal we need to take the magnitude of the 
@@ -99,7 +99,7 @@ class Field:
                 self.n_row -= _min * 2
                 _delta_y = _min
                 
-            # We can only trim if we trim from both sides (left and right); otherwise we mess up the where the center is.
+            # We can only trim if we trim from both sides (left and right); otherwise we mess up where the center is.
             if _left_margin and _right_margin:
 
                 # If the left and right margins are not equal we need to take the magnitude of the
@@ -228,16 +228,25 @@ class Field:
             self.n_row -= 2
             _delta_y = 0
         return _delta_y
-                                    
+
     def West(self):
         _min, _max = self.Min_Max_Column_With_Mine()
         
+        # If the right most mine is in the last column, we need to "add" two columns to the West side.
+        # All the mines need to be shifted to the right two x-coordinates.
         if _max == self.n_col - 1:
             self.center_x += 1
             self.n_col += 2
             _delta_x = 2
+        
+        # If the right most mine is in the 2nd to last column, we need to add a column to the West side and,
+        # also remove one from the East side. So no change to the total number of columns.
+        # All the mines need to be shifted to the right one x-coordinate.
         elif _max == self.n_col - 2:
             _delta_x = 1
+            
+        # If the right most mine is in the 3rd to last column or more, we need to remove two columns from the East side.
+        # No change to the mines' x-coordinate.
         elif _max <= self.n_col - 3:
             self.center_x  -= 1
             self.n_col -= 2

@@ -54,7 +54,7 @@ pass (32) <on step 5>
 Tests\Field5.1.txt Tests\Script5.1.txt
 
 ######################################################################
-# A script that contains every single missile fire patter and every
+# A script that contains every single missile fire pattern and every
 # single direction to move including a blank line (implied falling)
 # The field is also not uniform on the right side (rows do not have equal lengths)
 ######################################################################

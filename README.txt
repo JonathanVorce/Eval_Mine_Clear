@@ -27,10 +27,13 @@ Run automated tests from 'Tests\Run_Tests.py'
 > cd Tests\
 > python Run_Tests.py
 
-See 'Tests\Input_to_Script.txt' for manual testing instructions.  
+For manual testing instructions, see 'Tests\Input_to_Script.txt' for valid Field/Script pairings 
 Example testing call:
 > python Eval_Mine_Clear_Script.py Tests\Field1.txt Tests\Script1.txt
 
+For unit tests run:
+> cd Unit_Tests
+> python Field_Unit_Tests.py
 *************
 * BRANCHES: *
 *************
