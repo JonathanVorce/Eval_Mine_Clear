@@ -45,8 +45,9 @@ class Ship:
             _f = self.field.Move
         elif self.fire_commands.get(command):
             _cmd_list = self.fire_commands[command]
-            _f = self.field.Fire
-            
+            _f = self.field.Detonate_Torpedo
+
+        # Iterate through the list of movement commands or firing coordinates 
         for i in _cmd_list:
             _f(i)
 
