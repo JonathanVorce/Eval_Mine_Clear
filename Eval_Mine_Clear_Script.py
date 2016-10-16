@@ -6,6 +6,7 @@ import sys
 from Field  import Field
 from Script import Script
 from Score  import Score
+from Ship   import Ship
 
 ###########################################################
 # main - Mine Clearing Exercise Evaluator
@@ -28,6 +29,16 @@ def main():
         # Read each line from the script file and create a script object 
         _field  = Field(_field_file)
         _script = Script(_script_file)
+        
+        _fire_patterns = {
+            'alpha' : [(-1,-1),(-1, 1),( 1,-1),( 1, 1)],
+            'beta'  : [(-1, 0),( 0,-1),( 0, 1),( 1, 0)],
+            'gamma' : [(-1, 0),( 0, 0),( 1, 0)]        ,
+            'delta' : [( 0,-1),( 0, 0),( 0, 1)]        }
+
+         # Create a ship, pass in the field that was created, and pass in the fire patterns
+         # (optionally pass in more advances movement commands)
+        _ship = Ship(_field, fire_cmds=_fire_patterns)
         
         _n_steps = _script.Get_N_Steps()    
         _score = Score(_field.Get_N_Mines())
@@ -59,7 +70,7 @@ def main():
             print()         # print an empty line
             
             # Execute instructions
-            _script.Pass_Instruction_Into_Provided_Function(_step,_field.Command)
+            _script.Pass_Instruction_Into_Provided_Function(_step,_ship.Command)
             _n_steps_executed += 1 
             
             # Score instructions

@@ -152,23 +152,7 @@ class Field:
             _min_col = 0
             _max_col = 0
         return _min_col, _max_col       
-    
-    # Wrapper for all command functions
-    def Command(self,command):
-        _functions = {
-            'north' : self.Move,
-            'south' : self.Move,
-            'east'  : self.Move,
-            'west'  : self.Move,
-            ''      : self.Move, # Fall
-            'alpha' : self.Fire,
-            'beta'  : self.Fire,
-            'gamma' : self.Fire,
-            'delta' : self.Fire}
 
-        _f = _functions[command]
-        _f(command)
-    
     # Wrapper for all move functions
     # The move functions are sufficiently different that combining them 
     # would result in obfuscated code
@@ -281,6 +265,7 @@ class Field:
             if _mine == ord('a'):
                 self.passed_mines = True
                 self.mines[_xy] = ord('*')
+                self.mines[_xy] = ord('*')
             elif _mine == ord('A'):
                 self.mines[_xy] = ord('z')
             else:
@@ -290,25 +275,20 @@ class Field:
 
     # Fire a torpedo at each coordinate relative to center of the field. 
     # If a mine appears at a target coordinate delete it from the dictionary.
-    def Fire(self,pattern):
-        _coordinates = {
-            'alpha' : [(-1,-1),(-1, 1),( 1,-1),( 1, 1)],
-            'beta'  : [(-1, 0),( 0,-1),( 0, 1),( 1, 0)],
-            'gamma' : [(-1, 0),( 0, 0),( 1, 0)]        ,
-            'delta' : [( 0,-1),( 0, 0),( 0, 1)]        }
-
-        for _x, _y in _coordinates[pattern]:
-            _target_x = self.center_x + _x
-            _target_y = self.center_y + _y
-            if (_target_x < 0) or (_target_y < 0) or \
-               (_target_x >= self.n_col) or (_target_y >= self.n_row):
-                continue
+    def Detonate_Torpedo(self,coordinate):
+        _x , _y = coordinate
+        
+        _target_x = self.center_x + _x
+        _target_y = self.center_y + _y
+        if (_target_x < 0) or (_target_y < 0) or \
+           (_target_x >= self.n_col) or (_target_y >= self.n_row):
+            return
             
-            # Remove the mine if it is in the dictionary
-            if self.mines.__contains__((_target_x,_target_y)):
-                self.n_mines -= 1
-                del self.mines[(_target_x,_target_y)]
-    
+        # Remove the mine if it is in the dictionary
+        if self.mines.__contains__((_target_x,_target_y)):
+            self.n_mines -= 1
+            del self.mines[(_target_x,_target_y)]
+
     # Start at (0,0), if no mine appears at those coordinates print '.', otherwise print the value of the mine. 
     def Print(self):
         self.Trim_Edges()
