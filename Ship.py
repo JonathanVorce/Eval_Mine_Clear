@@ -34,8 +34,8 @@ class Ship:
             ''      : [''     ]}  # Fall
 
 
-        self.fire_commands.update(move_cmds)
-        self.move_commands.update(fire_cmds)
+        self.fire_commands.update(fire_cmds)
+        self.move_commands.update(move_cmds)
 
     # Wrapper for all command functions
     def Command(self,command):
@@ -48,6 +48,6 @@ class Ship:
             _f = self.field.Fire
             
         for i in _cmd_list:
-            _f(command)
+            _f(i)
 
 #end class Ship class
