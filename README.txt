@@ -34,7 +34,14 @@ Example testing call:
 For unit tests run:
 > cd Unit_Tests
 > python Field_Unit_Tests.py
+
 *************
 * BRANCHES: *
 *************
     + Master : can run script in Python v3 and v2
+
+*******************
+* Design Process: *
+*******************
+Included is a document containing the design decisions and a description of all the classes and testing.
+Eval_Mine_Clear\Design_Process_Vorce.docx
